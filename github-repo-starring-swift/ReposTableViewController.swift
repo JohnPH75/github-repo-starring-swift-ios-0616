@@ -40,5 +40,23 @@ class ReposTableViewController: UITableViewController {
 
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedRepo = store.repositories[indexPath.row]
+        GithubAPIClient.checkIfRepositoryIsStarred(selectedRepo.fullName) { (starred) in
+            if starred == true {
+                let alert = UIAlertController(title: "Toggle", message: "repo was unstarred \(selectedRepo.fullName)", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Toggle", message: "repo was starred \(selectedRepo.fullName)", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+            }
+        }
+        store.toggleStarStatusForRepository(selectedRepo) {
+            
+        }
+    }
 }

@@ -19,7 +19,7 @@ class GithubRepository {
             valueAsString = dictionary["html_url"] as? String,
             valueAsURL = NSURL(string: valueAsString),
             repoID = dictionary["id"]?.stringValue
-            else { fatalError("Could not create repository object from supplied dictionary") }
+            else { fatalError("Error creating instance of GithubRepository \(dictionary) ") }
         
         htmlURL = valueAsURL
         fullName = name
